@@ -1,0 +1,66 @@
+# First Capital Investor Week Landing Page
+# LiteSpeed / Apache Configuration for Hostinger Subdirectory (/firstcapital)
+
+# Prevent directory indexing
+Options -Indexes
+
+# Ensure trailing slash for directory requests
+<IfModule mod_dir.c>
+    DirectorySlash On
+</IfModule>
+
+# Handle HTML5 History Mode routing
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /firstcapital/
+
+    # Ensure /firstcapital redirects to /firstcapital/
+    RewriteRule ^$ index.html [L]
+
+    # If the requested file or folder exists, serve directly
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Otherwise rewrite to index.html
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# MIME types (Essential for modern JavaScript, CSS, SVGs and Web fonts)
+<IfModule mod_mime.c>
+    AddType text/html .html
+    AddType text/css .css
+    AddType application/javascript .js .mjs
+    AddType application/json .json
+    AddType image/png .png
+    AddType image/jpeg .jpg .jpeg
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+    AddType font/ttf .ttf
+</IfModule>
+
+# CORS Headers
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Enable Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Gzip / Deflate Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json application/javascript
+</IfModule>
