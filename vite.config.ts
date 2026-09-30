@@ -11,6 +11,9 @@ const base = process.env.VITE_BASE_PATH || "/firstcapital/";
 export default defineConfig({
   vite: {
     base,
+    build: {
+      assetsDir: "static",
+    },
   },
   tanstackStart: {
     server: { entry: "server" },
